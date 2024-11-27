@@ -16,5 +16,5 @@ MODULE => program (OneToMany)
 
 
 
-CATEGORY =>MODULE (OneToMany)
+CATEGORY => MODULE (OneToMany)
 MODULE => CATEGORY (ManyToOne)
