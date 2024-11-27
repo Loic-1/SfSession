@@ -1,0 +1,20 @@
+TEACHER => SESSION (OneToMany)
+SESSION => TEACHER (ManyToOne)
+
+
+
+PUPIL => SESSION (ManyToMany)
+SESSION => PUPIL (ManyToMany)
+
+
+
+program => MODULE (ManyToOne)
+MODULE => program (OneToMany)
+
+program => SESSION (ManyToOne)
+SESSION => program (OneToMany)
+
+
+
+CATEGORY =>MODULE (OneToMany)
+MODULE => CATEGORY (ManyToOne)
