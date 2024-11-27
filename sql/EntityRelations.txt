@@ -8,11 +8,11 @@ SESSION => PUPIL (ManyToMany)
 
 
 
-program => MODULE (ManyToOne)
-MODULE => program (OneToMany)
-
 program => SESSION (ManyToOne)
 SESSION => program (OneToMany)
+
+program => MODULE (ManyToOne)
+MODULE => program (OneToMany)
 
 
 
