@@ -3,9 +3,42 @@
 
 <h1>Liste des sessions</h1>
 
-{% if sessions %}
-    {% for session in sessions %}
-        <p>{{ session.name }}</p>
-    {% endfor %}
-{% endif %}
+<h2>Sessions d'actualité</h2>
+
+{% for session in sessionsCurr %}
+
+<div>
+  <a href="{{ path('detail_session', {'id': session.id}) }}">{{ session }}</a> <br />
+  Places disponibles: {{ session.availablePlaces }} <br />
+  Début: {{ session.startDateFr }} <br />
+  Fin: {{ session.endDateFr }}
+</div>
+{% endfor %}
+
+<h2>Sessions à venir</h2>
+
+{% for session in sessionsFuture %}
+
+<div>
+  <a href="{{ path('detail_session', {'id': session.id}) }}">{{ session }}</a> <br />
+  Places disponibles: {{ session.availablePlaces }} <br />
+  Début: {{ session.startDateFr }} <br />
+  Fin: {{ session.endDateFr }}
+</div>
+{% endfor %}
+
+<h2>Sessions passées</h2>
+
+{% for session in sessionsOld %}
+
+<div>
+  <a href="{{ path('detail_session', {'id': session.id}) }}">{{ session }}</a> <br />
+  Places disponibles: {{ session.availablePlaces }} <br />
+  Début: {{ session.startDateFr }} <br />
+  Fin: {{ session.endDateFr }}
+</div>
+{% endfor %}
+
+<a href="{{ path('add_session') }}">Ajouter une session</a>
+
 {% endblock %}

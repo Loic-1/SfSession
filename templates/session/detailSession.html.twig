@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %} {% block title %}Détail {{ session.name }}{% endblock %}
+{% block body %}
+
+<h1>Détail {{ session.name }}</h1>
+
+Formateur: {{ session.teacher.name }}
+
+{% endblock %}

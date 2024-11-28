@@ -36,7 +36,7 @@ class Session
 
     #[ORM\ManyToOne(inversedBy: 'sessions')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?teacher $teacher = null;
+    private ?Teacher $teacher = null;
 
     /**
      * @var Collection<int, Pupil>
@@ -84,6 +84,11 @@ class Session
         return $this->start_date;
     }
 
+    public function getStartDateFr(): ?string
+    {
+        return $this->start_date->format("d/m/Y");
+    }
+
     public function setStartDate(\DateTimeInterface $start_date): static
     {
         $this->start_date = $start_date;
@@ -94,6 +99,11 @@ class Session
     public function getEndDate(): ?\DateTimeInterface
     {
         return $this->end_date;
+    }
+
+    public function getEndDateFr(): ?string
+    {
+        return $this->end_date->format("d/m/Y");
     }
 
     public function setEndDate(\DateTimeInterface $end_date): static
@@ -133,12 +143,12 @@ class Session
         return $this;
     }
 
-    public function getTeacher(): ?teacher
+    public function getTeacher(): ?Teacher
     {
         return $this->teacher;
     }
 
-    public function setTeacher(?teacher $teacher): static
+    public function setTeacher(?Teacher $teacher): static
     {
         $this->teacher = $teacher;
 
@@ -170,5 +180,10 @@ class Session
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return ($this->name);
     }
 }
