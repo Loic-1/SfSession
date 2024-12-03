@@ -26,11 +26,11 @@ class SessionFormType extends AbstractType
             ])
             ->add('teacher', EntityType::class, [
                 'class' => Teacher::class,
-                'choice_label' => 'id',
+                'choice_label' => 'firstName',
             ])
             ->add('pupils', EntityType::class, [
                 'class' => Pupil::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
                 'multiple' => true,
             ])
         ;

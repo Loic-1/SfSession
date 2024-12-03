@@ -3,6 +3,31 @@
 
 <h1>Détail {{ session.name }}</h1>
 
-Formateur: {{ session.teacher.name }}
+
+<h2>{{ session.programs|length > 1 ? 'Programmes:' : 'Programme:' }} </h2>
+
+{% for program in session.programs %}
+
+    {{"Durée: " ~ program.duration }} <br>
+    {{"Module: " ~ program.modules }} <br>
+{% endfor %}
+
+<h2>Formateur:</h2>
+
+{{ session.teacher }}
+
+<h2>{{ session.pupils|length > 1 ? 'Stagiaires inscrits:' : 'Stagiaire inscrit:' }}</h2>
+
+{% for pupil in session.pupils %}
+
+    {{ pupil }} <a href="{{ path('unlist_session', { id: pupil.id }) }}">Désinscrire</a><br>
+{% endfor %}
+
+<h2>{{ unattend|length > 1 ? 'Stagiaires non inscrits:' : 'Stagiaire non inscrit' }}</h2>
+
+{% for pupil in unattend %}
+
+  {{ pupil }} <a href="{{ path('list_session', { id: pupil.id }) }}">Inscrire</a><br>
+{% endfor %}
 
 {% endblock %}

@@ -8,10 +8,12 @@
 {% for session in sessionsCurr %}
 
 <div>
-  <a href="{{ path('detail_session', {'id': session.id}) }}">{{ session }}</a> <br />
+  <a href="{{ path('detail_session', { id: session.id }) }}">{{ session }}</a>
+  <br />
   Places disponibles: {{ session.availablePlaces }} <br />
   Début: {{ session.startDateFr }} <br />
-  Fin: {{ session.endDateFr }}
+  Fin: {{ session.endDateFr }} <br />
+  <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
 </div>
 {% endfor %}
 
@@ -20,10 +22,12 @@
 {% for session in sessionsFuture %}
 
 <div>
-  <a href="{{ path('detail_session', {'id': session.id}) }}">{{ session }}</a> <br />
+  <a href="{{ path('detail_session', { id: session.id }) }}">{{ session }}</a>
+  <br />
   Places disponibles: {{ session.availablePlaces }} <br />
   Début: {{ session.startDateFr }} <br />
-  Fin: {{ session.endDateFr }}
+  Fin: {{ session.endDateFr }} <br />
+  <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
 </div>
 {% endfor %}
 
@@ -32,13 +36,15 @@
 {% for session in sessionsOld %}
 
 <div>
-  <a href="{{ path('detail_session', {'id': session.id}) }}">{{ session }}</a> <br />
+  <a href="{{ path('detail_session', { id: session.id }) }}">{{ session }}</a>
+  <br />
   Places disponibles: {{ session.availablePlaces }} <br />
   Début: {{ session.startDateFr }} <br />
-  Fin: {{ session.endDateFr }}
+  Fin: {{ session.endDateFr }} <br />
+  <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
 </div>
 {% endfor %}
 
-<a href="{{ path('add_session') }}">Ajouter une session</a>
+<a href="{{ path('add_session') }}">Ajouter une session</a> <br>
 
 {% endblock %}
