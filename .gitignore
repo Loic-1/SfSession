@@ -24,6 +24,8 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
+/.env
+
 
 
 /sql/LoopingImage.jpg

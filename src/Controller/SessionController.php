@@ -79,17 +79,22 @@ class SessionController extends AbstractController
     #[Route('/session/unlist/{session_id}/{pupil_id}', name: 'unlist_pupil')]
     public function unregisterPupil(Session $session, Pupil $pupil, EntityManagerInterface $entityManager): Response
     {
+        // $pupil est target quand son id est égal à pupil_id
+        // on supprime $pupil de la collection pupil de $session (aussi target en fonction de l'id)
         $session->removePupil($pupil);
 
+        // on prépare le changement
         $entityManager->persist($session);
+        // on push
         $entityManager->flush();
 
+        // redirection vers session/detailSession.php, à la session 'id'
         return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id}', name: 'list_session')]
-    public function registerPupil()
+    #[Route('/session/{session_id}/{pupil_id}', name: 'list_pupil')]
+    public function registerPupil(Session $session, Pupil $pupil, EntityManagerInterface $entityManager): Response
     {
-        return $this->redirectToRoute('detail_session');
+        return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
     }
 }
