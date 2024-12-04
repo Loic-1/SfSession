@@ -143,6 +143,16 @@ class Session
         return $this;
     }
 
+    public function removeProgram2(Program $program): static
+    {
+        if ($this->programs->removeElement($program)) {
+            // set the owning side to null (unless already changed)
+            unset($program);
+        }
+
+        return $this;
+    }
+
     public function getTeacher(): ?Teacher
     {
         return $this->teacher;

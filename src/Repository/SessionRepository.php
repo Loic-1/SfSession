@@ -82,32 +82,34 @@ class SessionRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    // désenregistrer un stagiaire d'une session
-    // public function unregisterPupil($pupil_id, $session_id) 
-    // {
-    //     $em = $this->getEntityManager();
-    //     $qb = $em->createQueryBuilder();
+    /** Afficher les programmes non inclus dans une session */
+    public function findNonProgrammes($session_id)
+    {
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
 
-    //     $qb->delete('App\Entity\Pupil', 'p')
-        
-    //         // on accède à la Collection session de Pupil et on lui attribue l'alias 's'
-    //         // ->leftJoin('p.session', 's')
-    //         // où pupil.id = $pupil_id
-    //         ->where('p.id = :pupil_id')
+        $qb = $sub;
+        // sélectionner tous les programmes d'une session dont l'id est passé en paramètre
+        $qb->select('pr')
+            ->from('App\Entity\Program', 'pr')
+            ->leftJoin('pr.session', 'se')
+            ->where('se.id = :id');
 
-    //         ->andWhere('s.id = :session_id')
+        $sub = $em->createQueryBuilder();
+        // sélectionner tous les stagiaires qui ne SONT PAS (NOT IN) dans le résultat précédent
+        // on obtient donc les stagiaires non inscrits pour une session définie
+        $sub->select('pro')
+            ->from('App\Entity\Program', 'pro')
+            ->where($sub->expr()->notIn('pro.id', $qb->getDQL()))
+            // requête paramétrée (on définit :id pour $qb)
+            ->setParameter('id', $session_id)
+            // trier la liste des stagiaires sur le nom de famille
+            ->orderBy('pro.duration', 'ASC');
 
-    //         // on définit ':id'
-    //         ->setParameter('pupil_id', $pupil_id)
-    //         ->setParameter('session_id', $session_id)
-    //     ;
-
-    //     // on prépare la requête
-    //     $query = $qb->getQuery();
-    //     // on renvoie le résultat
-    //     return $query->getResult();
-    // }
-
+        // renvoyer le résultat
+        $query = $sub->getQuery();
+        return $query->getResult();
+    }
 
 
     //    /**

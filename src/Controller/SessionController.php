@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Program;
 use App\Entity\Pupil;
 use App\Entity\Session;
 use App\Form\SessionFormType;
@@ -70,31 +71,62 @@ class SessionController extends AbstractController
     {
         $unattend = $sessionRepository->findNonInscrits($session->getId());
 
+        $nonIncluded = $sessionRepository->findNonProgrammes($session->getId());
+
         return $this->render('session/detailSession.html.twig', [
             'session' => $session,
+            'nonIncluded' => $nonIncluded,
             'unattend' => $unattend
         ]);
     }
 
-    #[Route('/session/unlist/{session_id}/{pupil_id}', name: 'unlist_pupil')]
+    /* MODIFICATION PUPIL */
+
+    #[Route('/session/unlistPupil/{session}/{pupil}', name: 'unlist_pupil')]
     public function unregisterPupil(Session $session, Pupil $pupil, EntityManagerInterface $entityManager): Response
     {
         // $pupil est target quand son id est égal à pupil_id
         // on supprime $pupil de la collection pupil de $session (aussi target en fonction de l'id)
         $session->removePupil($pupil);
 
-        // on prépare le changement
-        $entityManager->persist($session);
-        // on push
+        // on prépare la requête
+        // $entityManager->persist($session);
+        // on effectue la requête
         $entityManager->flush();
 
         // redirection vers session/detailSession.php, à la session 'id'
         return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{session_id}/{pupil_id}', name: 'list_pupil')]
+    #[Route('/session/listPupil/{session}/{pupil}', name: 'list_pupil')]
     public function registerPupil(Session $session, Pupil $pupil, EntityManagerInterface $entityManager): Response
     {
+        $session->addPupil($pupil);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
+    }
+
+    /* MODIFICATION PROGRAM */
+
+    #[Route('/session/unlistProgram/{session}/{program}', name: 'unlist_program')]
+    public function unregisterProgram(Session $session, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        $session->removeProgram2($program);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
+    }
+
+    #[Route('/session/listProgram/{session}/{program}', name: 'list_program')]
+    public function registerProgram(Session $session, Program $program, EntityManagerInterface $entityManager): Response
+    {
+        $session->addProgram($program);
+
+        $entityManager->flush();
+
         return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
     }
 }

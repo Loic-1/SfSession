@@ -5,46 +5,108 @@
 
 <h2>Sessions d'actualité</h2>
 
-{% for session in sessionsCurr %}
+{% if sessionsCurr|length > 0 %}
 
-<div>
-  <a href="{{ path('detail_session', { id: session.id }) }}">{{ session }}</a>
-  <br />
-  Places disponibles: {{ session.availablePlaces }} <br />
-  Début: {{ session.startDateFr }} <br />
-  Fin: {{ session.endDateFr }} <br />
-  <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
-</div>
-{% endfor %}
+<table>
+  <tr>
+    <th>Intitulé</th>
+    <th>Places disponibles</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+  </tr>
+
+  {% for session in sessionsCurr %}
+  <tr>
+    <td>
+      <a href="{{ path('detail_session', { id: session.id }) }}">{{
+        session
+      }}</a>
+    </td>
+    <td>{{ session.availablePlaces - session.pupils | length }}</td>
+    <td>{{ session.startDateFr }}</td>
+    <td>{{ session.endDateFr }}</td>
+    <td>
+      <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %}
+
+<p>Aucune session trouvée...</p>
+{% endif %}
 
 <h2>Sessions à venir</h2>
 
-{% for session in sessionsFuture %}
+{% if sessionsFuture|length > 0 %}
 
-<div>
-  <a href="{{ path('detail_session', { id: session.id }) }}">{{ session }}</a>
-  <br />
-  Places disponibles: {{ session.availablePlaces }} <br />
-  Début: {{ session.startDateFr }} <br />
-  Fin: {{ session.endDateFr }} <br />
-  <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
-</div>
-{% endfor %}
+<table>
+  <tr>
+    <th>Intitulé</th>
+    <th>Places disponibles</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+  </tr>
+
+  {% for session in sessionsFuture %}
+
+  <tr>
+    <td>
+      <a href="{{ path('detail_session', { id: session.id }) }}">{{
+        session
+      }}</a>
+    </td>
+    <td>{{ session.availablePlaces - session.pupils | length }}</td>
+    <td>{{ session.startDateFr }}</td>
+    <td>{{ session.endDateFr }}</td>
+    <td>
+      <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %}
+
+<p>Aucune session trouvée...</p>
+{% endif %}
 
 <h2>Sessions passées</h2>
 
-{% for session in sessionsOld %}
+{% if sessionsOld|length > 0 %}
 
-<div>
-  <a href="{{ path('detail_session', { id: session.id }) }}">{{ session }}</a>
-  <br />
-  Places disponibles: {{ session.availablePlaces }} <br />
-  Début: {{ session.startDateFr }} <br />
-  Fin: {{ session.endDateFr }} <br />
-  <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
-</div>
-{% endfor %}
+<table>
+  <tr>
+    <th>Intitulé</th>
+    <th>Places disponibles</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+  </tr>
 
-<a href="{{ path('add_session') }}">Ajouter une session</a> <br>
+  {% for session in sessionsOld %}
+
+  <tr>
+    <td>
+      <a href="{{ path('detail_session', { id: session.id }) }}">{{
+        session
+      }}</a>
+    </td>
+    <td>{{ session.availablePlaces - session.pupils | length }}</td>
+    <td>{{ session.startDateFr }}</td>
+    <td>{{ session.endDateFr }}</td>
+    <td>
+      <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %}
+
+<p>Aucune session trouvée...</p>
+{% endif %}
+
+<a href="{{ path('add_session') }}">Ajouter une session</a> <br />
 
 {% endblock %}

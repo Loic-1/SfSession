@@ -1,33 +1,138 @@
-{% extends 'base.html.twig' %} {% block title %}Détail {{ session.name }}{% endblock %}
-{% block body %}
+{% extends 'base.html.twig' %} {% block title %}Détail {{ session.name }}{%
+endblock %} {% block body %}
 
 <h1>Détail {{ session.name }}</h1>
-
-
-<h2>{{ session.programs|length > 1 ? 'Programmes:' : 'Programme:' }} </h2>
-
-{% for program in session.programs %}
-
-    {{"Durée: " ~ program.duration }} <br>
-    {{"Module: " ~ program.modules }} <br>
-{% endfor %}
 
 <h2>Formateur:</h2>
 
 {{ session.teacher }}
 
-<h2>{{ session.pupils|length > 1 ? 'Stagiaires inscrits:' : 'Stagiaire inscrit:' }}</h2>
+<h2>
+  {{ session.programs|length > 1 ? 'Programmes inclus:' : 'Programme inclus:' }}
+</h2>
 
-{% for pupil in session.pupils %}
+{% if session.programs|length > 0 %}
 
-    {{ pupil }} <a href="{{ path('unlist_pupil', { pupil_id: pupil.id, session_id: session.id }) }}">Désinscrire</a><br>
-{% endfor %}
+<table>
+  <tr>
+    <th>Module</th>
+    <th>Durée</th>
+  </tr>
 
-<h2>{{ unattend|length > 1 ? 'Stagiaires non inscrits:' : 'Stagiaire non inscrit' }}</h2>
+  {% for program in session.programs %}
+  <tr>
+    <td>{{ program.modules }}</td>
+    <td>{{ program.duration ~ " min"}}</td>
+    <td>
+      <a
+        href="{{
+          path('unlist_program', { program: program.id, session: session.id })
+        }}"
+        >Retirer</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
+</table>
 
-{% for pupil in unattend %}
+{% else %}
 
-  {{ pupil }} <a href="{{ path('list_pupil', { pupil_id: pupil.id, session_id: session.id }) }}">Inscrire</a><br>
-{% endfor %}
+<p>Aucun programme trouvé...</p>
+{% endif %}
 
-{% endblock %}
+<h2>
+  {{ nonIncluded|length > 1 ? 'Programmes non inclus:' : 'Programme non inclus:' }}
+</h2>
+
+{% if nonIncluded|length > 0 %}
+
+<table>
+  <tr>
+    <th>Module</th>
+    <th>Durée</th>
+  </tr>
+
+  {% for program in nonIncluded %}
+  <tr>
+    <td>{{ program.modules }}</td>
+    <td>{{ program.duration ~ " min"}}</td>
+    <td>
+      <a
+        href="{{
+          path('list_program', { program: program.id, session: session.id })
+        }}"
+        >Ajouter</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %}
+
+<p>Aucun programme trouvé...</p>
+{% endif %}
+
+<h2>
+  {{ session.pupils|length > 1 ? 'Stagiaires inscrits:' : 'Stagiaire inscrit:' }}
+</h2>
+
+{% if session.pupils|length > 0 %}
+
+<table>
+  <tr>
+    <th>Stagiaire</th>
+  </tr>
+
+  {% for pupil in session.pupils %}
+  <tr>
+    <td>{{ pupil }}</td>
+    <td>
+      <a
+        href="{{
+          path('unlist_pupil', { pupil: pupil.id, session: session.id })
+        }}"
+        >Désinscrire</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %} {#
+<p>Il n'y a pas de stagiaire inscrit à cette session...</p>
+#}
+<p>Aucun stagiaire trouvé...</p>
+{% endif %}
+
+<h2>
+  {{ unattend|length > 1 ? 'Stagiaires non inscrits:' : 'Stagiaire non inscrit' }}
+</h2>
+
+{% if unattend|length > 0 %}
+
+<table>
+  <tr>
+    <th>Stagiaire</th>
+  </tr>
+
+  {% for pupil in unattend %}
+  <tr>
+    <td>{{ pupil }}</td>
+    <td>
+      <a
+        href="{{
+          path('list_pupil', { pupil: pupil.id, session: session.id })
+        }}"
+        >Inscrire</a
+      >
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% else %} {#
+<p>Tous les stagiaires sont inscrits pour cette session...</p>
+#}
+<p>Aucun stagiaire trouvé...</p>
+{% endif %} {% endblock %}
