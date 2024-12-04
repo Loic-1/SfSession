@@ -66,6 +66,8 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session');
     }
 
+    /* DETAIL SESSION */
+
     #[Route('/session/{id}', name: 'detail_session')]
     public function detailSession(SessionRepository $sessionRepository, Session $session): Response
     {
@@ -113,7 +115,7 @@ class SessionController extends AbstractController
     #[Route('/session/unlistProgram/{session}/{program}', name: 'unlist_program')]
     public function unregisterProgram(Session $session, Program $program, EntityManagerInterface $entityManager): Response
     {
-        $session->removeProgram2($program);
+        $session->removeProgram($program);
 
         $entityManager->flush();
 

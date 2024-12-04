@@ -24,11 +24,13 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessionloic.category : ~1 rows (environ)
+-- Listage des données de la table sfsessionloic.category : ~3 rows (environ)
 INSERT INTO `category` (`id`, `name`) VALUES
-	(1, 'DWWM');
+	(1, 'DWWM'),
+	(2, 'Bureautique'),
+	(3, 'Secrétariat');
 
 -- Listage de la structure de table sfsessionloic. doctrine_migration_versions
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
@@ -85,12 +87,16 @@ CREATE TABLE IF NOT EXISTS `module` (
   PRIMARY KEY (`id`),
   KEY `IDX_C24262812469DE2` (`category_id`),
   CONSTRAINT `FK_C24262812469DE2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessionloic.module : ~2 rows (environ)
+-- Listage des données de la table sfsessionloic.module : ~6 rows (environ)
 INSERT INTO `module` (`id`, `name`, `category_id`) VALUES
 	(1, 'Bases Symfony', 1),
-	(2, 'CSS', 1);
+	(2, 'CSS', 1),
+	(3, 'Introduction Word', 2),
+	(4, 'Introduction Excel', 2),
+	(5, 'Techniques d\'accueil', 3),
+	(6, 'Prise de rendez-vous', 3);
 
 -- Listage de la structure de table sfsessionloic. program
 CREATE TABLE IF NOT EXISTS `program` (
@@ -103,18 +109,22 @@ CREATE TABLE IF NOT EXISTS `program` (
   KEY `IDX_92ED7784613FECDF` (`session_id`),
   CONSTRAINT `FK_92ED778460D6DC42` FOREIGN KEY (`modules_id`) REFERENCES `module` (`id`),
   CONSTRAINT `FK_92ED7784613FECDF` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessionloic.program : ~2 rows (environ)
+-- Listage des données de la table sfsessionloic.program : ~6 rows (environ)
 INSERT INTO `program` (`id`, `duration`, `modules_id`, `session_id`) VALUES
 	(1, 25, 1, 5),
-	(2, 55, 2, 5);
+	(2, 55, 2, 5),
+	(3, 20, 3, 1),
+	(4, 35, 4, 1),
+	(5, 22, 5, 6),
+	(6, 18, 6, 6);
 
 -- Listage de la structure de table sfsessionloic. pupil
 CREATE TABLE IF NOT EXISTS `pupil` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `first_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `birthday` datetime NOT NULL,
   `phone_number` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -123,9 +133,9 @@ CREATE TABLE IF NOT EXISTS `pupil` (
 
 -- Listage des données de la table sfsessionloic.pupil : ~3 rows (environ)
 INSERT INTO `pupil` (`id`, `email`, `name`, `first_name`, `birthday`, `phone_number`) VALUES
-	(1, 'pupil1@test.fr', 'pupil1Name', 'pupil1FirstName', '2024-11-28 14:05:53', '0000000000'),
-	(2, 'pupil2@test.fr', 'pupil2Name', 'pupil2FirstName', '2024-12-03 16:40:48', '0000000000'),
-	(3, 'pupil3@test.fr', 'pupil3Name', 'pupil3FirstName', '2024-12-03 10:39:01', '0000000000');
+	(1, 'pupil1@test.fr', 'pupil1Name', 'Jean', '2024-11-28 14:05:53', '0000000000'),
+	(2, 'pupil2@test.fr', 'pupil2Name', 'Jeanne', '2024-12-03 16:40:48', '0000000000'),
+	(3, 'pupil3@test.fr', 'pupil3Name', 'Pierre', '2024-12-03 10:39:01', '0000000000');
 
 -- Listage de la structure de table sfsessionloic. pupil_session
 CREATE TABLE IF NOT EXISTS `pupil_session` (
@@ -138,17 +148,16 @@ CREATE TABLE IF NOT EXISTS `pupil_session` (
   CONSTRAINT `FK_A1C028DBD2FD11` FOREIGN KEY (`pupil_id`) REFERENCES `pupil` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessionloic.pupil_session : ~4 rows (environ)
+-- Listage des données de la table sfsessionloic.pupil_session : ~3 rows (environ)
 INSERT INTO `pupil_session` (`pupil_id`, `session_id`) VALUES
 	(1, 5),
-	(1, 7),
-	(1, 12),
+	(1, 6),
 	(2, 5);
 
 -- Listage de la structure de table sfsessionloic. session
 CREATE TABLE IF NOT EXISTS `session` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `available_places` int NOT NULL,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
@@ -156,15 +165,13 @@ CREATE TABLE IF NOT EXISTS `session` (
   PRIMARY KEY (`id`),
   KEY `IDX_D044D5D441807E1D` (`teacher_id`),
   CONSTRAINT `FK_D044D5D441807E1D` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessionloic.session : ~5 rows (environ)
+-- Listage des données de la table sfsessionloic.session : ~3 rows (environ)
 INSERT INTO `session` (`id`, `name`, `available_places`, `start_date`, `end_date`, `teacher_id`) VALUES
-	(1, 'session1', 25, '2024-11-28 13:38:33', '2024-11-28 13:38:34', 1),
-	(5, 'session3', 12, '2024-11-07 15:08:00', '2024-12-24 15:08:00', 1),
-	(6, 'session4', 5, '2024-12-28 16:10:13', '2025-01-28 16:10:21', 1),
-	(7, 'session5', 500, '2024-09-24 08:30:00', '2025-04-24 17:00:00', 1),
-	(12, 'session2', 2500, '2024-11-25 15:57:00', '2024-12-02 15:57:00', 1);
+	(1, 'Bureautique', 25, '2024-11-28 13:38:33', '2024-11-28 13:38:34', 25),
+	(5, 'DWWM', 12, '2024-11-07 15:08:00', '2024-12-24 15:08:00', 1),
+	(6, 'Secrétariat', 5, '2024-12-28 16:10:13', '2025-01-28 16:10:21', 25);
 
 -- Listage de la structure de table sfsessionloic. teacher
 CREATE TABLE IF NOT EXISTS `teacher` (
@@ -193,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table sfsessionloic.user : ~1 rows (environ)
+-- Listage des données de la table sfsessionloic.user : ~0 rows (environ)
 INSERT INTO `user` (`id`, `email`, `name`, `first_name`, `roles`, `password`, `is_verified`) VALUES
 	(13, 'user1@test.fr', 'Schmidt', 'Thomas', '[]', '$2y$13$ofhpHbcCb4g4e9HEwx7lfOFnsv2mFHGSZGq.IBYZ425hBanZl/icq', 1);
 
