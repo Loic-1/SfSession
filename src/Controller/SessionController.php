@@ -76,19 +76,19 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/session/unlist/{id}', name: 'unlist_session')]
-    public function unregisterPupil(SessionRepository $sessionRepository, Pupil $pupil, Session $session) 
+    #[Route('/session/unlist/{session_id}/{pupil_id}', name: 'unlist_pupil')]
+    public function unregisterPupil(Session $session, Pupil $pupil, EntityManagerInterface $entityManager): Response
     {
-        $sessionRepository->unregisterPupil($pupil->getId(), $session->getId());
-        
-        // return $this->redirectToRoute('detail_session');
-        return $this->render('session/index.html.twig', [
-            'session' => $session
-        ]);
+        $session->removePupil($pupil);
+
+        $entityManager->persist($session);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
     }
 
     #[Route('/session/{id}', name: 'list_session')]
-    public function registerPupil() 
+    public function registerPupil()
     {
         return $this->redirectToRoute('detail_session');
     }

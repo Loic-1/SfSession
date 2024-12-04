@@ -83,30 +83,30 @@ class SessionRepository extends ServiceEntityRepository
     }
 
     // désenregistrer un stagiaire d'une session
-    public function unregisterPupil($pupil_id, $session_id) 
-    {
-        $em = $this->getEntityManager();
-        $qb = $em->createQueryBuilder();
+    // public function unregisterPupil($pupil_id, $session_id) 
+    // {
+    //     $em = $this->getEntityManager();
+    //     $qb = $em->createQueryBuilder();
 
-        $qb->delete('App\Entity\Pupil', 'p')
+    //     $qb->delete('App\Entity\Pupil', 'p')
         
-            // on accède à la Collection session de Pupil et on lui attribue l'alias 's'
-            // ->leftJoin('p.session', 's')
-            // où pupil.id = $pupil_id
-            ->where('p.id = :pupil_id')
+    //         // on accède à la Collection session de Pupil et on lui attribue l'alias 's'
+    //         // ->leftJoin('p.session', 's')
+    //         // où pupil.id = $pupil_id
+    //         ->where('p.id = :pupil_id')
 
-            ->andWhere('s.id = :session_id')
+    //         ->andWhere('s.id = :session_id')
 
-            // on définit ':id'
-            ->setParameter('pupil_id', $pupil_id)
-            ->setParameter('session_id', $session_id)
-        ;
+    //         // on définit ':id'
+    //         ->setParameter('pupil_id', $pupil_id)
+    //         ->setParameter('session_id', $session_id)
+    //     ;
 
-        // on prépare la requête
-        $query = $qb->getQuery();
-        // on renvoie le résultat
-        return $query->getResult();
-    }
+    //     // on prépare la requête
+    //     $query = $qb->getQuery();
+    //     // on renvoie le résultat
+    //     return $query->getResult();
+    // }
 
 
 

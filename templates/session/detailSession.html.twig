@@ -20,14 +20,14 @@
 
 {% for pupil in session.pupils %}
 
-    {{ pupil }} <a href="{{ path('unlist_session', { id: pupil.id }) }}">Désinscrire</a><br>
+    {{ pupil }} <a href="{{ path('unlist_session', { pupil_id: pupil.id, session_id: session.id }) }}">Désinscrire</a><br>
 {% endfor %}
 
 <h2>{{ unattend|length > 1 ? 'Stagiaires non inscrits:' : 'Stagiaire non inscrit' }}</h2>
 
 {% for pupil in unattend %}
 
-  {{ pupil }} <a href="{{ path('list_session', { id: pupil.id }) }}">Inscrire</a><br>
+  {{ pupil }} <a href="{{ path('list_session', { pupil_id: pupil.id, session_id: session.id }) }}">Inscrire</a><br>
 {% endfor %}
 
 {% endblock %}
