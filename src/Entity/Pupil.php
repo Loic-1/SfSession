@@ -88,6 +88,11 @@ class Pupil
         return $this->birthday;
     }
 
+    public function getBirthdayFr(): ?string
+    {
+        return $this->birthday->format("d/m/Y");
+    }
+
     public function setBirthday(\DateTimeInterface $birthday): static
     {
         $this->birthday = $birthday;

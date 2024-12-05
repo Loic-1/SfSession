@@ -6,6 +6,14 @@
 
 {# teacher: sessions et pupil: session #} {% if person.type == 'pupil' %}
 
+<h2>Coordonnées:</h2>
+
+<p>
+  <strong>Email: </strong>{{ person.email }} <br />
+  <strong>Numéro de téléphone: </strong>{{ person.phoneNumber }} <br />
+  <strong>Date de naissance: </strong>{{ person.birthdayFr }}
+</p>
+
 <h2>{{ person.session|length > 1 ? 'Sessions' : 'Session' }}</h2>
 
 <table>
@@ -32,6 +40,10 @@
 </table>
 {% else %}
 
+<h2>Coordonnées:</h2>
+
+<p><strong>Email: </strong>{{ person.email }} <br /></p>
+
 <h2>{{ person.sessions|length > 1 ? 'Sessions' : 'Session' }}</h2>
 
 <table>
@@ -56,12 +68,6 @@
   </tr>
   {% endfor %}
 </table>
-{% endif %}
-
-{# {% if unattend|length > 0 %}
-    {% for session in unattend %}
-        {{ session.name }}
-    {% endfor %}
-{% endif %} #}
-
-{% endblock %}
+{% endif %} {# {% if unattend|length > 0 %} {% for session in unattend %}
+{{ session.name }}
+{% endfor %} {% endif %} #} {% endblock %}
