@@ -126,11 +126,15 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/listProgram/{session}/{program}', name: 'list_program')]
-    public function registerProgram(Session $session, Program $program, EntityManagerInterface $entityManager): Response
+    #[Route('/session/listProgram/{session}/{program}', name: 'list_program', methods: ['POST'])]
+    public function registerProgram(Session $session, Program $program, EntityManagerInterface $entityManager, Request $request): Response
     {
-        $session->addProgram($program);
+        $nbJours = $request->request->get('nbJours');
 
+        $session->addProgram($program);
+        $program->setDuration($nbJours);
+
+        $entityManager->persist($program);
         $entityManager->flush();
 
         return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);

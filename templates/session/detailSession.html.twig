@@ -24,7 +24,7 @@ endblock %} {% block body %}
   <tr>
     <td>{{ program.modules }}</td>
     <td>{{ program.modules.category.name }}</td>
-    <td>{{ program.duration ~ " min"}}</td>
+    <td>{{ program.duration }}</td>
     <td>
       <a
         href="{{
@@ -57,16 +57,25 @@ endblock %} {% block body %}
 
   {% for program in nonIncluded %}
   <tr>
-    <td> {{ program.modules }} </td>
-    <td> {{ program.modules.category.name }} </td>
-    <td> {{ program.duration ~ " min"}} </td>
+    <td>{{ program.modules }}</td>
+    <td>{{ program.modules.category.name }}</td>
     <td>
-      <a
-        href="{{
+      <form
+        method="POST"
+        action="{{
           path('list_program', { program: program.id, session: session.id })
         }}"
-        >Ajouter</a
       >
+        <input
+          type="number"
+          name="nbJours"
+          min="1"
+          value="1"
+          size="3"
+          required
+        />
+        <button type="submit">Ajouter</button>
+      </form>
     </td>
   </tr>
   {% endfor %}
