@@ -133,6 +133,11 @@ class Pupil
 
     public function __toString()
     {
-        return($this->first_name . " " . $this->name);
+        return ($this->first_name . " " . $this->name);
+    }
+
+    public function getType()
+    {
+        return "pupil";
     }
 }

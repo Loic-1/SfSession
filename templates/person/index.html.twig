@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %} {% block title %}Liste des personnes{% endblock
+%} {% block body %}
+
+<h1>Liste des personnes</h1>
+
+<h2>Formateurs</h2>
+
+{% for teacher in teachers %}
+<a href="{{ path('detail_person', { type: 'teacher', id: teacher.id }) }}"> {{ teacher }}</a><br />
+{% endfor %}
+
+<h2>Stagiaires</h2>
+
+{% for pupil in pupils %}
+<a href="{{ path('detail_person', { type: 'pupil', id: pupil.id }) }}"> {{ pupil }} </a> <br>
+{% endfor %} {% endblock %}

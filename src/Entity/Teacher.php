@@ -110,4 +110,9 @@ class Teacher
     {
         return($this->first_name . " " . $this->name);
     }
+
+    public function getType()
+    {
+        return "teacher";
+    }
 }

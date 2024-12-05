@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %} {% block title %}Détail
+{{person.firstName ~ " " ~ person.name }}
+{% endblock %} {% block body %}
+
+<h1>Détail {{person.firstName ~ " " ~ person.name }}</h1>
+
+{# teacher: sessions et pupil: session #} {% if person.type == 'pupil' %}
+
+<h2>{{ person.session|length > 1 ? 'Sessions' : 'Session' }}</h2>
+
+<table>
+  <tr>
+    <th>Intitulé</th>
+    <th>Places disponibles</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+  </tr>
+
+  {% for session in person.session %}
+
+  <tr>
+    <td>
+      <a href="{{ path('detail_session', { id: session.id }) }}">{{
+        session
+      }}</a>
+    </td>
+    <td>{{ session.availablePlaces - session.pupils | length }}</td>
+    <td>{{ session.startDateFr }}</td>
+    <td>{{ session.endDateFr }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+
+<h2>{{ person.sessions|length > 1 ? 'Sessions' : 'Session' }}</h2>
+
+<table>
+  <tr>
+    <th>Intitulé</th>
+    <th>Places disponibles</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+  </tr>
+
+  {% for session in person.sessions %}
+
+  <tr>
+    <td>
+      <a href="{{ path('detail_session', { id: session.id }) }}">{{
+        session
+      }}</a>
+    </td>
+    <td>{{ session.availablePlaces - session.pupils | length }}</td>
+    <td>{{ session.startDateFr }}</td>
+    <td>{{ session.endDateFr }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+{# {% if unattend|length > 0 %}
+    {% for session in unattend %}
+        {{ session.name }}
+    {% endfor %}
+{% endif %} #}
+
+{% endblock %}
