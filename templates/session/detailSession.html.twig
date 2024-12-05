@@ -16,12 +16,14 @@ endblock %} {% block body %}
 <table>
   <tr>
     <th>Module</th>
+    <th>Catégorie</th>
     <th>Durée</th>
   </tr>
 
   {% for program in session.programs %}
   <tr>
     <td>{{ program.modules }}</td>
+    <td>{{ program.modules.category.name }}</td>
     <td>{{ program.duration ~ " min"}}</td>
     <td>
       <a
@@ -49,13 +51,15 @@ endblock %} {% block body %}
 <table>
   <tr>
     <th>Module</th>
+    <th>Catégorie</th>
     <th>Durée</th>
   </tr>
 
   {% for program in nonIncluded %}
   <tr>
-    <td>{{ program.modules }}</td>
-    <td>{{ program.duration ~ " min"}}</td>
+    <td> {{ program.modules }} </td>
+    <td> {{ program.modules.category.name }} </td>
+    <td> {{ program.duration ~ " min"}} </td>
     <td>
       <a
         href="{{

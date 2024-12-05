@@ -16,6 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class SessionController extends AbstractController
 {
+    /* AFFICHAGE SESSIONS */
+
     #[Route('/session', name: 'app_session')]
     public function index(SessionRepository $sessionRepository): Response
     {
@@ -31,6 +33,8 @@ class SessionController extends AbstractController
             'sessionsOld' => $sessionsOld
         ]);
     }
+
+    /* MODIFICATION SESSION */
 
     #[Route('/session/new', name: 'add_session')]
     public function addSession(Request $request, EntityManagerInterface $entityManager): Response
@@ -82,7 +86,7 @@ class SessionController extends AbstractController
         ]);
     }
 
-    /* MODIFICATION PUPIL */
+    /* MODIFICATION PUPIL DANS DETAIL*/
 
     #[Route('/session/unlistPupil/{session}/{pupil}', name: 'unlist_pupil')]
     public function unregisterPupil(Session $session, Pupil $pupil, EntityManagerInterface $entityManager): Response
@@ -110,7 +114,7 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('detail_session', ['id' => $session->getId()]);
     }
 
-    /* MODIFICATION PROGRAM */
+    /* MODIFICATION PROGRAM DANS SESSION*/
 
     #[Route('/session/unlistProgram/{session}/{program}', name: 'unlist_program')]
     public function unregisterProgram(Session $session, Program $program, EntityManagerInterface $entityManager): Response

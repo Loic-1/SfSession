@@ -21,7 +21,8 @@ class Program
     private ?Module $modules = null;
 
     #[ORM\ManyToOne(inversedBy: 'programs')]
-    #[ORM\JoinColumn(nullable: false)]
+    // #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Session $session = null;
 
     public function getId(): ?int
