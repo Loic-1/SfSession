@@ -111,6 +111,64 @@ class SessionRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /** Afficher les sessions auxquelles le pupil n'est pas inscrit */
+    public function findNonSessionsPupil($pupil_id)
+    {
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        // sélectionner tous les stagiaires d'une session dont l'id est passé en paramètre
+        $qb->select('s')
+            ->from('App\Entity\Session', 's')
+            ->leftJoin('s.pupils', 'p')
+            ->where('p.id = :id');
+
+        $sub = $em->createQueryBuilder();
+        // sélectionner tous les stagiaires qui ne SONT PAS (NOT IN) dans le résultat précédent
+        // on obtient donc les stagiaires non inscrits pour une session définie
+        $sub->select('se')
+            ->from('App\Entity\Session', 'se')
+            ->where($sub->expr()->notIn('se.id', $qb->getDQL()))
+            // requête paramétrée (on définit :id pour $qb)
+            ->setParameter('id', $pupil_id)
+            // trier la liste des stagiaires sur le nom de famille
+            ->orderBy('se.name', 'ASC');
+
+        // renvoyer le résultat
+        $query = $sub->getQuery();
+        return $query->getResult();
+    }
+
+        /** Afficher les sessions auxquelles le pupil n'est pas inscrit */
+        public function findNonSessionsTeacher($teacher_id)
+        {
+            $em = $this->getEntityManager();
+            $sub = $em->createQueryBuilder();
+    
+            $qb = $sub;
+            // sélectionner tous les stagiaires d'une session dont l'id est passé en paramètre
+            $qb->select('s')
+                ->from('App\Entity\Session', 's')
+                ->leftJoin('s.teacher', 't')
+                ->where('t.id = :id');
+    
+            $sub = $em->createQueryBuilder();
+            // sélectionner tous les stagiaires qui ne SONT PAS (NOT IN) dans le résultat précédent
+            // on obtient donc les stagiaires non inscrits pour une session définie
+            $sub->select('se')
+                ->from('App\Entity\Session', 'se')
+                ->where($sub->expr()->notIn('se.id', $qb->getDQL()))
+                // requête paramétrée (on définit :id pour $qb)
+                ->setParameter('id', $teacher_id)
+                // trier la liste des stagiaires sur le nom de famille
+                ->orderBy('se.name', 'ASC');
+    
+            // renvoyer le résultat
+            $query = $sub->getQuery();
+            return $query->getResult();
+        }
+
 
     //    /**
     //     * @return Session[] Returns an array of Session objects

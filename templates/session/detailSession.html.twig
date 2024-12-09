@@ -13,7 +13,7 @@ endblock %} {% block body %}
 
 {% if session.programs|length > 0 %}
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Module</th>
     <th>Catégorie</th>
@@ -48,7 +48,7 @@ endblock %} {% block body %}
 
 {% if nonIncluded|length > 0 %}
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Module</th>
     <th>Catégorie</th>
@@ -74,7 +74,7 @@ endblock %} {% block body %}
           size="3"
           required
         />
-        <button type="submit">Ajouter</button>
+        <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>
     </td>
   </tr>
@@ -92,7 +92,7 @@ endblock %} {% block body %}
 
 {% if session.pupils|length > 0 %}
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Stagiaire</th>
   </tr>
@@ -124,7 +124,7 @@ endblock %} {% block body %}
 
 {% if unattend|length > 0 %}
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Stagiaire</th>
   </tr>

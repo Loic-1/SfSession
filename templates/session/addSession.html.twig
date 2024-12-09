@@ -5,13 +5,22 @@
 
 {{ form_errors(sessionForm) }}
 {{ form_start(sessionForm) }}
-    {{ form_row(sessionForm.name) }}
-    {{ form_row(sessionForm.available_places) }}
-    {{ form_row(sessionForm.start_date) }}
-    {{ form_row(sessionForm.end_date) }}
-    {{ form_row(sessionForm.teacher) }}
-    {{ form_row(sessionForm.pupils) }}
+<div class="mb-3">
+  {{ form_row(sessionForm.name) }}
+</div>
+<div class="mb-3">
+  {{ form_row(sessionForm.available_places) }}
+</div>
+<div class="mb-3">
+  {{ form_row(sessionForm.start_date) }}
+</div>
+<div class="mb-3">
+  {{ form_row(sessionForm.end_date) }}
+</div>
+<div class="mb-3">
+  {{ form_row(sessionForm.teacher) }}
+</div>
 
-    <button type="submit">Ajouter session</button>
+<button type="submit">Ajouter session</button>
 {{ form_end(sessionForm) }}
 {% endblock %}

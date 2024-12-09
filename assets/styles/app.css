@@ -1,12 +1,23 @@
+table,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td,
+th {
+  padding: 5px;
+}
+
 body {
-    background-color: skyblue;
+  background-color: var(--bs-body-bg);
 }
 
-table, td, th {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
+a {
+    color: var(	--bs-emphasis-color);
 
-td, th {
-    padding: 5px;
+    &.add_session_button {
+        color: var(--bs-tertiary-bg);
+    }
 }

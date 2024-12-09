@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %} {% block title %}Liste des sessions{% endblock %}
 {% block body %}
 
-<h1>Liste des sessions</h1>
+<h1 class="p-3">Liste des sessions</h1>
 
-<h2>Sessions d'actualité</h2>
+<h2 class="p-3">Sessions d'actualité</h2>
 
 {% if sessionsCurr|length > 0 %}
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Intitulé</th>
     <th>Places disponibles</th>
@@ -26,7 +26,9 @@
     <td>{{ session.startDateFr }}</td>
     <td>{{ session.endDateFr }}</td>
     <td>
-      <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
+      <a href="{{ path('remove_session', { id: session.id }) }}"
+        ><i class="fa-solid fa-trash"></i
+      ></a>
     </td>
   </tr>
   {% endfor %}
@@ -34,14 +36,14 @@
 
 {% else %}
 
-<p>Aucune session trouvée...</p>
+<p class="p-3">Aucune session trouvée...</p>
 {% endif %}
 
-<h2>Sessions à venir</h2>
+<h2 class="p-3">Sessions à venir</h2>
 
 {% if sessionsFuture|length > 0 %}
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Intitulé</th>
     <th>Places disponibles</th>
@@ -61,7 +63,9 @@
     <td>{{ session.startDateFr }}</td>
     <td>{{ session.endDateFr }}</td>
     <td>
-      <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
+      <a href="{{ path('remove_session', { id: session.id }) }}"
+        ><i class="fa-solid fa-trash"></i
+      ></a>
     </td>
   </tr>
   {% endfor %}
@@ -69,14 +73,14 @@
 
 {% else %}
 
-<p>Aucune session trouvée...</p>
+<p class="p-3">Aucune session trouvée...</p>
 {% endif %}
 
-<h2>Sessions passées</h2>
+<h2 class="p-3">Sessions passées</h2>
 
 {% if sessionsOld|length > 0 %}
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Intitulé</th>
     <th>Places disponibles</th>
@@ -96,7 +100,9 @@
     <td>{{ session.startDateFr }}</td>
     <td>{{ session.endDateFr }}</td>
     <td>
-      <a href="{{ path('remove_session', { id: session.id }) }}">Supprimer</a>
+      <a href="{{ path('remove_session', { id: session.id }) }}"
+        ><i class="fa-solid fa-trash"></i
+      ></a>
     </td>
   </tr>
   {% endfor %}
@@ -104,9 +110,11 @@
 
 {% else %}
 
-<p>Aucune session trouvée...</p>
+<p class="p-3">Aucune session trouvée...</p>
 {% endif %}
 
-<a href="{{ path('add_session') }}">Ajouter une session</a> <br />
+<button class="btn btn-success p-2">
+  <a href="{{ path('add_session') }}"  class="add_session_button">Ajouter une session</a> <br />
+</button>
 
 {% endblock %}

@@ -2,21 +2,21 @@
 {{person.firstName ~ " " ~ person.name }}
 {% endblock %} {% block body %}
 
-<h1>Détail {{person.firstName ~ " " ~ person.name }}</h1>
+<h1 class="p-3">Détail {{person.firstName ~ " " ~ person.name }}</h1>
 
-{# teacher: sessions et pupil: session #} {% if person.type == 'pupil' %}
+{% if person.type == 'pupil' %}
 
-<h2>Coordonnées:</h2>
+<h2 class="p-3">Coordonnées:</h2>
 
-<p>
+<p  class="p-3">
   <strong>Email: </strong>{{ person.email }} <br />
   <strong>Numéro de téléphone: </strong>{{ person.phoneNumber }} <br />
   <strong>Date de naissance: </strong>{{ person.birthdayFr }}
 </p>
 
-<h2>{{ person.session|length > 1 ? 'Sessions' : 'Session' }}</h2>
+<h2 class="p-3">{{ person.session|length > 1 ? 'Sessions' : 'Session' }}</h2>
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Intitulé</th>
     <th>Places disponibles</th>
@@ -35,18 +35,67 @@
     <td>{{ session.availablePlaces - session.pupils | length }}</td>
     <td>{{ session.startDateFr }}</td>
     <td>{{ session.endDateFr }}</td>
+    <td>
+      <a
+        href="{{
+          path('unlist_session_pupil', {
+            type: 'pupil',
+            session: session.id,
+            pupil: person.id
+          })
+        }}"
+        ><i class="fa-solid fa-minus"></i
+      ></a>
+    </td>
   </tr>
   {% endfor %}
 </table>
+
+<h2 class="p-3">Autres sessions</h2>
+
+<table class="table table-striped">
+  <tr>
+    <th>Intitulé</th>
+    <th>Places disponibles</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+  </tr>
+
+  {% for session in unattend %}
+  <tr>
+    <td>
+      <a href="{{ path('detail_session', { id: session.id }) }}">{{
+        session
+      }}</a>
+    </td>
+    <td>{{ session.availablePlaces - session.pupils | length }}</td>
+    <td>{{ session.startDateFr }}</td>
+    <td>{{ session.endDateFr }}</td>
+    <td>
+      <a
+        href="{{
+          path('list_session_pupil', {
+            type: 'pupil',
+            session: session.id,
+            pupil: person.id
+          })
+        }}"
+        ><i class="fa-solid fa-plus"></i
+      ></a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
 {% else %}
 
-<h2>Coordonnées:</h2>
+<h2 class="p-3">Coordonnées:</h2>
 
-<p><strong>Email: </strong>{{ person.email }} <br /></p>
+<p class="p-3"><strong>Email: </strong>{{ person.email }} <br /></p>
 
-<h2>{{ person.sessions|length > 1 ? 'Sessions' : 'Session' }}</h2>
+<h2 class="p-3">{{ person.sessions|length > 1 ? 'Sessions' : 'Session' }}</h2>
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>Intitulé</th>
     <th>Places disponibles</th>
@@ -65,9 +114,56 @@
     <td>{{ session.availablePlaces - session.pupils | length }}</td>
     <td>{{ session.startDateFr }}</td>
     <td>{{ session.endDateFr }}</td>
+    <td>
+      <a
+        href="{{
+          path('unlist_session_teacher', {
+            type: 'teacher',
+            session: session.id,
+            teacher: person.id
+          })
+        }}"
+        ><i class="fa-solid fa-minus"></i
+      ></a>
+    </td>
   </tr>
   {% endfor %}
 </table>
-{% endif %} {# {% if unattend|length > 0 %} {% for session in unattend %}
-{{ session.name }}
-{% endfor %} {% endif %} #} {% endblock %}
+
+<h2 class="p-3">Autres sessions</h2>
+
+<table class="table table-striped">
+  <tr>
+    <th>Intitulé</th>
+    <th>Places disponibles</th>
+    <th>Date de début</th>
+    <th>Date de fin</th>
+  </tr>
+
+  {% for session in unattend %}
+  <tr>
+    <td>
+      <a href="{{ path('detail_session', { id: session.id }) }}">{{
+        session
+      }}</a>
+    </td>
+    <td>{{ session.availablePlaces - session.pupils | length }}</td>
+    <td>{{ session.startDateFr }}</td>
+    <td>{{ session.endDateFr }}</td>
+    <td>
+      <a
+        href="{{
+          path('list_session_teacher', {
+            type: 'teacher',
+            session: session.id,
+            teacher: person.id
+          })
+        }}"
+        ><i class="fa-solid fa-plus"></i
+      ></a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endif %}{% endblock %}
